@@ -27,7 +27,7 @@ class Database
                 PDO::ATTR_ERRMODE,
                 PDO::ERRMODE_EXCEPTION
             );
-
+            //asd
             $this->conn->setAttribute(
                 PDO::ATTR_DEFAULT_FETCH_MODE,
                 PDO::FETCH_ASSOC
