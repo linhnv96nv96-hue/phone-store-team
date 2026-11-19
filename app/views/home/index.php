@@ -31,6 +31,8 @@
                 <span class="section-label">SẢN PHẨM</span>
                 <h2>ĐIỆN THOẠI NỔI BẬT</h2>
                 <p>Những sản phẩm mới nhất tại Phone Store</p>
+                <p>Những sản phẩm mới nhất tại Phone Store</p>
+                <p>Những sản phẩm mới nhất tại Phone Store</p>
             </div>
         <?php endif; ?>
     </div>
