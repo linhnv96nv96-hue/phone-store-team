@@ -18,7 +18,8 @@
         <?php if (!empty($keyword ?? '')): ?>
             <div>
                 <span class="section-label">TÌM KIẾM</span>
-                <h2>KẾT QUẢ TÌM KIẾM</h2>
+                <h2>KẾT QUẢ TÌM KIẾM 1000</h2>
+                <h2>KẾT QUẢ TÌM KIẾM 1000</h2>
                 <p>
                     Từ khóa:
                     <strong><?= htmlspecialchars($keyword ?? '', ENT_QUOTES, 'UTF-8') ?></strong>
