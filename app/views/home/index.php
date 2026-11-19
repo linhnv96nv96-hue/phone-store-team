@@ -1,104 +1,107 @@
-<section class="banner mb-4">
-    <div>
-        <h1>ĐIỆN THOẠI CHÍNH HÃNG</h1>
-        <p>Khám phá công nghệ mới – Ưu đãi hấp dẫn mỗi ngày</p>
-        <a href="#products" class="btn btn-light">
-            Mua sắm ngay
-        </a>
+<section class="hero-banner mb-5">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <span class="hero-tag">PHONE STORE</span>
+            <h1>ĐIỆN THOẠI CHÍNH HÃNG</h1>
+            <p>
+                Khám phá công nghệ mới, hiệu năng mạnh mẽ và ưu đãi hấp dẫn mỗi ngày.
+            </p>
+            <a href="#products" class="btn hero-btn">
+                Mua sắm ngay
+            </a>
+        </div>
     </div>
 </section>
 
-
-<section id="products" class="product-section">
-
-    <div class="section-title mb-4">
-
+<section id="products" class="product-section py-4">
+    <div class="section-header mb-4">
         <?php if (!empty($keyword ?? '')): ?>
-
-            <h2>KẾT QUẢ TÌM KIẾM</h2>
-
-            <p>
-                Từ khóa:
-                <strong><?= htmlspecialchars($keyword ?? '', ENT_QUOTES, 'UTF-8') ?></strong>
-                — Tìm thấy <?= count($products ?? []) ?> sản phẩm
-            </p>
-
+            <div>
+                <span class="section-label">TÌM KIẾM</span>
+                <h2>KẾT QUẢ TÌM KIẾM</h2>
+                <p>
+                    Từ khóa:
+                    <strong><?= htmlspecialchars($keyword ?? '', ENT_QUOTES, 'UTF-8') ?></strong>
+                    — Tìm thấy <?= count($products ?? []) ?> sản phẩm
+                </p>
+            </div>
         <?php else: ?>
-
-
-            <h2>ĐIỆN THOẠI NỔI BẬT</h2>
-
-            <p>Những sản phẩm mới nhất tại Phone Store</p>
-
+            <div>
+                <span class="section-label">SẢN PHẨM</span>
+                <h2>ĐIỆN THOẠI NỔI BẬT</h2>
+                <p>Những sản phẩm mới nhất tại Phone Store</p>
+            </div>
         <?php endif; ?>
-
     </div>
 
-
     <div class="row g-4">
-
         <?php if (!empty($products)): ?>
-
             <?php foreach ($products as $product): ?>
 
-                <div class="col-6 col-md-4 col-lg-3">
-                    <div class="product-card">
+                <?php
+                $productImages = [
+                    'iPhone 15 128GB' => 'iphone-15.jpg',
+                    'iPhone 16 Pro Max 256GB' => 'iphone-16-pro-max.jpg',
+                    'Samsung Galaxy A56 5G' => 'samsung-a56.jpg',
+                    'Samsung Galaxy S25 Ultra' => 'phone-placeholder.svg',
+                    'Xiaomi 15 256GB' => 'xiaomi-15.webp',
+                    'OPPO Reno13 5G' => 'oppo-reno13.png'
+                ];
 
+                $imageName = $productImages[$product['name']] ?? 'phone-placeholder.svg';
 
+                $originalPrice = (int)($product['price'] ?? 0);
+                $salePrice = (int)($product['sale_price'] ?? 0);
+                $finalPrice = $salePrice > 0 ? $salePrice : $originalPrice;
 
+                $discountPercent = 0;
+                if ($salePrice > 0 && $originalPrice > 0 && $salePrice < $originalPrice) {
+                    $discountPercent = round((($originalPrice - $salePrice) / $originalPrice) * 100);
+                }
+                ?>
 
-                        <?php
-                        $productImages = [
-                            'iPhone 15 128GB' => 'iphone-15.jpg',
-                            'iPhone 16 Pro Max 256GB' => 'iphone-16-pro-max.jpg',
-                            'Samsung Galaxy A56 5G' => 'samsung-a56.jpg',
-                            'Samsung Galaxy S25 Ultra' => 'phone-placeholder.svg',
-                            'Xiaomi 15 256GB' => 'xiaomi-15.webp',
-                            'OPPO Reno13 5G' => 'oppo-reno13.png'
-                        ];
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="product-card h-100">
 
-                        $imageName = $productImages[$product['name']] ?? 'phone-placeholder.svg';
-                        ?>
+                        <div class="product-thumb">
+                            <?php if ($discountPercent > 0): ?>
+                                <span class="discount-badge">-<?= $discountPercent ?>%</span>
+                            <?php endif; ?>
 
-                        <div class="product-image">
                             <img
                                 src="/phone_store/public/assets/images/<?= htmlspecialchars($imageName) ?>"
                                 alt="<?= htmlspecialchars($product['name']) ?>"
                                 onerror="this.onerror=null; this.src='/phone_store/public/assets/images/phone-placeholder.svg';">
                         </div>
 
-
-
-
                         <div class="product-info">
-
-                            <span class="brand">
+                            <span class="brand-pill">
                                 <?= htmlspecialchars($product['brand_name']) ?>
                             </span>
 
-                            <h5>
+                            <h5 class="product-name">
                                 <?= htmlspecialchars($product['name']) ?>
                             </h5>
 
-                            <div class="price">
-                                <strong>
-                                    <?= number_format(
-                                        $product['sale_price'] > 0
-                                            ? $product['sale_price']
-                                            : $product['price'],
-                                        0,
-                                        ',',
-                                        '.'
-                                    ) ?>đ
-                                </strong>
+                            <div class="price-box">
+                                <div class="current-price">
+                                    <?= number_format($finalPrice, 0, ',', '.') ?>đ
+                                </div>
+
+                                <?php if ($salePrice > 0 && $salePrice < $originalPrice): ?>
+                                    <div class="old-price">
+                                        <?= number_format($originalPrice, 0, ',', '.') ?>đ
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
-                            <p class="stock">
-                                Còn <?= (int)$product['stock'] ?> sản phẩm
-                            </p>
+                            <div class="stock-row">
+                                <span class="stock-dot"></span>
+                                <span>Còn <?= (int)$product['stock'] ?> sản phẩm</span>
+                            </div>
 
                             <a href="/phone_store/public/index.php?page=detail&id=<?= (int)$product['id'] ?>"
-                                class="btn btn-danger w-100">
+                                class="btn btn-detail w-100">
                                 Xem chi tiết
                             </a>
                         </div>
@@ -106,23 +109,21 @@
                 </div>
 
             <?php endforeach; ?>
-
         <?php else: ?>
 
-            <?php if (!empty($keyword)): ?>
-
-                <p>
-                    Không tìm thấy sản phẩm phù hợp với:
-                    <strong><?= htmlspecialchars($keyword) ?></strong>
-                </p>
-
-            <?php else: ?>
-
-                <p>Hiện chưa có sản phẩm nào.</p>
-
-            <?php endif; ?>
+            <div class="col-12">
+                <div class="empty-box">
+                    <?php if (!empty($keyword)): ?>
+                        <p>
+                            Không tìm thấy sản phẩm phù hợp với:
+                            <strong><?= htmlspecialchars($keyword) ?></strong>
+                        </p>
+                    <?php else: ?>
+                        <p>Hiện chưa có sản phẩm nào.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
 
         <?php endif; ?>
-
     </div>
 </section>
